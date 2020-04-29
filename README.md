@@ -1,7 +1,5 @@
-# AutoPlug - Plugin
-
 ![](https://rapidus-info.webnode.com/_files/200000003-4d08d4d08f/AutoPlug%20GitHub%20Header%20800x80.png)
- # AutoPlug | Development Status
+# AutoPlug - Plugin
  > Searching for developers...
  > If you are interested contact me over my [Discord](https://discord.gg/DD3rbQe) or pm me on [Spigot](https://www.spigotmc.org/members/arkply.169349/)
 
