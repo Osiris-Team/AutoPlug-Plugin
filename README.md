@@ -1,13 +1,13 @@
 ![](https://rapidus-info.webnode.com/_files/200000003-4d08d4d08f/AutoPlug%20GitHub%20Header%20800x80.png)
 # Plugin | Tasks
- > Searching for developers...
- > If you are interested contact me over my [Discord](https://discord.gg/DD3rbQe) or pm me on [Spigot](https://www.spigotmc.org/members/arkply.169349/)
+The Autoplug-Plugin collects plugin information (like names,authors and versions) and compares them with latest available versions online.
 
  # AutoPlug | Ideas and insights
  - AutoPlug is meant to be that what all Server-Owners are waiting for. An easy to use interface to manage and update all of your Plugins! No more wasting time in searching links and changelogs!
- 
-![](https://rapidus-info.webnode.com/_files/200000001-c964dc964e/AutoPlug%20v1.0.png)
 
+ > If you are interested in this project and you have questions or you want to contribute just contact us:
+[Discord](https://discord.gg/DD3rbQe)
+[Spigot](https://www.spigotmc.org/members/osiristeam.935748/)
 
 
 
