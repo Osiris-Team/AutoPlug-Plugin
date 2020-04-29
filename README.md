@@ -10,5 +10,5 @@ The Autoplug-Plugin collects plugin information (like names,authors and versions
 [Spigot](https://www.spigotmc.org/members/osiristeam.935748/)
 
 
-MIT License
-> Copyright (c) 2020 Osiris Team
+
+> MIT License | Copyright (c) 2020 Osiris Team
