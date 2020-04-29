@@ -5,7 +5,8 @@ The Autoplug-Plugin collects plugin information (like names,authors and versions
  # AutoPlug | Ideas and insights
  - AutoPlug is meant to be that what all Server-Owners are waiting for. An easy to use interface to manage and update all of your Plugins! No more wasting time in searching links and changelogs!
 
- > If you are interested in this project and you have questions or you want to contribute just contact us:
+ # Join us!
+If you are interested in this project and you have questions or you want to contribute just contact us:
 [Discord](https://discord.gg/DD3rbQe)
 [Spigot](https://www.spigotmc.org/members/osiristeam.935748/)
 
