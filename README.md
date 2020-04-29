@@ -11,4 +11,4 @@ The Autoplug-Plugin collects plugin information (like names,authors and versions
 
 
 
-> MIT License | Copyright (c) 2020 Osiris Team
+> MIT License - Copyright (c) 2020 Osiris Team
