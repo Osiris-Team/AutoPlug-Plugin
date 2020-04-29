@@ -7,8 +7,8 @@ The Autoplug-Plugin collects plugin information (like names,authors and versions
 
  # Join us!
 If you are interested in this project and you have questions or you want to contribute just contact us:
-[Discord](https://discord.gg/DD3rbQe)
-[Spigot](https://www.spigotmc.org/members/osiristeam.935748/)
+ - [Discord](https://discord.gg/DD3rbQe)
+ - [Spigot](https://www.spigotmc.org/members/osiristeam.935748/)
 
 
 
