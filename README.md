@@ -19,12 +19,6 @@ If you are interested in this project and you have questions or you want to cont
 
 
 
-/**********************************************************************
- *
- * Copyright (c) 2020 Osiris Team
- * All rights reserved.
- * 
- * This software is copyrighted work licensed under the terms of the
- * AutoPlug License.  Please consult the file "LICENSE" for details. 
- *
- **********************************************************************/
+
+ > Copyright (c) 2020 Osiris Team. All rights reserved. Check the file "LICENSE" for details.
+
