@@ -1,0 +1,7 @@
+name: AutoPlugPlugin
+version: ${project.version}
+main: com.osiris.autoplug.plugin.AutoPlug
+api-version: 1.13
+authors: [OsirisTeam]
+description: Automatic Plugin Updater
+load: POSTWORLD
