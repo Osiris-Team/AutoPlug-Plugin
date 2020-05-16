@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 [Osiris Team](https://github.com/Osiris-Team)
+ * Copyright (c) 2020 [Osiris Team](https://github.com/Osiris-Team)
  *  All rights reserved.
  *
  *  This software is copyrighted work licensed under the terms of the
@@ -8,15 +8,17 @@
 
 package com.osiris.autoplug.plugin.tasks;
 
-import java.io.*;
-import java.net.*;
-import java.util.logging.*;
-
 import com.osiris.autoplug.plugin.GLOBALDATA;
 import org.bukkit.Bukkit;
-
-
 import org.bukkit.plugin.Plugin;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.SocketException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.bukkit.Bukkit.getPluginManager;
 
@@ -63,12 +65,11 @@ public class UpdatePlugins {
 
         } catch (Exception ex) {
             LOG.log(Level.SEVERE,
-                    "|Error connecting to the Online-Server at "+ GLOBALDATA.OFFICIAL_WEBSITE+" [!]");
+                    " [!] Error connecting to the Online-Server at "+ GLOBALDATA.OFFICIAL_WEBSITE+" [!]");
             LOG.log(Level.SEVERE,
-                    "|In most cases we are just performing updates and the website is up again after 2min [!]");
+                    " [!] In most cases we are just performing updates and the website is up again after 2min [!]");
             LOG.log(Level.SEVERE,
-                    "|So please wait 2min and try again. If you still get this error, please notify our Team [!]", ex);
-            throw new Exception(ex);
+                    " [!] So please wait 2min and try again. If you still get this error, please notify our Team [!]", ex);
         }
 
         //Connecting to AutoPlug.jar in main dir...
@@ -80,21 +81,18 @@ public class UpdatePlugins {
 
             String local_connection_result = local_dis.readUTF();
             if (local_connection_result.equals("true")) {
-                LOG.info(" - Connection to AutoPlug.jar successful! ");
+                LOG.info(" - Connection to local AutoPlug.jar successful! ");
 
             } else {
-                LOG.severe("|Couldn't establish connection to AutoPlug.jar [!]");
-                LOG.severe("|Please make sure you downloaded AutoPlug.jar and placed it into the main directory (where your server.jar is located) [!]");
-                LOG.severe("|Aborting server-restart, no plugins will be updated [!]");
+                LOG.severe(" [!] Couldn't establish connection to local AutoPlug.jar [!]");
+                LOG.severe(" [!] Unknown cause [!]");
             }
 
         } catch (IOException e) {
-            LOG.log(Level.SEVERE,
-                    "|Error connecting to the AutoPlug.jar [!]");
-            LOG.log(Level.SEVERE,
-                    "|Please make sure you downloaded it and moved it to your main folder where your server.jar is located [!]");
-            LOG.log(Level.SEVERE,
-                    "|You don't need to start the jar yourself, this plugin handles that for you. But you can start it yourself nevertheless like you would your regular server [!]", e);
+            LOG.severe(" [!] ERROR: " + e.getMessage());
+            LOG.severe(" [!] Couldn't establish connection to local AutoPlug.jar [!]");
+            LOG.severe(" [!] Please make sure you downloaded the AutoPlug.jar and placed it into the main directory (where your server.jar is located) [!]");
+            LOG.severe(" [!] You must change your startup script, so that it starts the AutoPlug.jar. It will handle the server starts/restarts [!]");
             e.printStackTrace();
         }
     }
@@ -116,7 +114,7 @@ public class UpdatePlugins {
 
                 int size = getPluginManager().getPlugins().length;
 
-                LOG.info(" - Found: "+size+" Plugins! Sending Data to Server... Please be patient this can take about 1min if you got more than 100 plugins...");
+                LOG.info(" - Checking "+size+" plugins...");
 
                 //SEND 4: send the size of for-loop
                 dos.writeInt(size);
@@ -138,12 +136,13 @@ public class UpdatePlugins {
 
                         if (!plugins[i].getName().isEmpty()) {
                             LOG.info("|----------------------------------------|");
+                            LOG.info(" ");
                             output_name= plugins[i].getName();
                             //SEND 8: Send Plugin Name
                             dos.writeUTF(output_name);
-                            LOG.info(" - Checking " + output_name +" for updates...");
+                            LOG.info(" - Checking [" + output_name +"]["+i+"/"+size+"] for updates...");
                         } else{
-                            LOG.severe(" ERROR NO AUTHOR DATA FOUND!");
+                            LOG.severe(" - Checking [ERROR: NO PLUGIN NAME FOUND IN PLUGIN.YML!]["+i+"/"+size+"] for updates...");
                             output_name = "no_data";
                             dos.writeUTF(output_name);
                         }
@@ -155,7 +154,7 @@ public class UpdatePlugins {
                             LOG.info(" - Author: " + output_author);
 
                         } else {
-                            LOG.severe(" ERROR NO AUTHOR DATA FOUND!");
+                            LOG.severe(" - Author: [ERROR: NO AUTHOR FOUND IN PLUGIN.YML!]");
                             output_author = "no_data";
                             dos.writeUTF(output_author);
                         }
@@ -166,7 +165,7 @@ public class UpdatePlugins {
                             dos.writeUTF(output_version);
                             LOG.info(" - Version: " + output_version);
                         } else{
-                            LOG.severe("ERROR NO PLUGIN VERSION FOUND!");
+                            LOG.severe(" - Version: [ERROR: NO PLUGIN VERSION FOUND IN PLUGIN.YML!]");
                             output_version = "no_data";
                             dos.writeUTF(output_version);
 
@@ -177,7 +176,7 @@ public class UpdatePlugins {
                         String final_resultString = dis.readUTF();
 
                         if (final_resultString.equals("query_returns_array_no_update")) {
-                            LOG.info(" - Already on latest version!("+output_version+")");
+                            LOG.info(" - Result: Already on latest version!("+output_version+")");
                             LOG.info(" ");
 
                             //RECEIVE 16: receive latest version
@@ -190,8 +189,9 @@ public class UpdatePlugins {
                             dos.writeUTF("true");
                         }
                         else if (final_resultString.equals("query_returns_array_no_author")) {
-                            LOG.info("- Couldn't find this Author on Spigot!");
-                            LOG.info("- This happens often for older Bukkit Plugins, consider finding a newer alternative :/ ");
+                            LOG.info(" - Result: Couldn't find this Author on Spigot!");
+                            LOG.info(" - Info: The plugin name/author shouldn't diverge too much from it's spigot-thread. ");
+                            LOG.info(" ");
 
                             //RECEIVE 16: receive latest version
                             String latest_version = dis.readUTF();
@@ -203,8 +203,8 @@ public class UpdatePlugins {
                             dos.writeUTF("true");
                         }
                         else if(final_resultString.equals("query_returns_object")){
-                            LOG.warning(" - Returned Json-Object and not array?!");
-                            LOG.warning(" - VERY rare error! Please notify us!");
+                            LOG.warning(" - Result: Returned Json-Object and not array?!");
+                            LOG.warning(" - Info: VERY rare error! Please notify us!");
                             LOG.info(" ");
 
                             //RECEIVE 16: receive latest version
@@ -217,8 +217,8 @@ public class UpdatePlugins {
                             dos.writeUTF("true");
                         }
                         else if(final_resultString.equals("query_no_result")) {
-                            LOG.warning(" - Critical Error! No result! *Needs inspection!!!");
-                            LOG.warning(" - Could be that Servers are offline! Check it out on: "+ GLOBALDATA.OFFICIAL_WEBSITE);
+                            LOG.warning(" - Result: Author was found, but not the plugin!");
+                            LOG.warning(" - Info: The plugin name/author shouldn't diverge too much from it's spigot-thread. ");
                             LOG.info(" ");
 
                             //RECEIVE 16: receive latest version
@@ -230,15 +230,29 @@ public class UpdatePlugins {
                             //SEND 17: send final reponse
                             dos.writeUTF("true");
                         }
+                        else if(final_resultString.equals("query_error")) {
+                            LOG.severe(" - Result: Server error! No result!");
+                            LOG.severe(" - Info: Abnormal result pls notify us -> https://discord.gg/GGNmtCC ");
+                            LOG.severe(" ");
+
+                            //RECEIVE 16: receive latest version
+                            String latest_version = dis.readUTF();
+
+                            //SEND local autoplug.jar, that this plugin doesn't needs further actions
+                            local_dos.writeUTF("false");
+
+                            //SEND 17: send final reponse
+                            dos.writeUTF("false");
+                        }
                         else {
 
                             //RECEIVE 16: receive latest version
                             String latest_version = dis.readUTF();
 
-                            String directory_plugins = System.getProperty("user.dir") + "\\plugins";
+                            String directory_plugins = System.getProperty("user.dir") + "/plugins";
 
-                            LOG.info(" - Outdated version ["+output_version+"] found! Downloading new version ["+latest_version+"] from Spigot with url: " + final_resultString);
-
+                            LOG.info(" - Result: Update available! ["+output_version+"] -> ["+latest_version+"]");
+                            LOG.info(" - Info: Downloading from Spigot: " + final_resultString);
                             //Download new version and write to download cache
                             DownloadUpdate downloadUpdate = new DownloadUpdate();
                             String cached_plugin_path = downloadUpdate.downloadJar(final_resultString, output_name, latest_version);
@@ -249,10 +263,10 @@ public class UpdatePlugins {
                                 //SEND local autoplug.jar, that this plugin needs update
                                 local_dos.writeUTF("true");
 
-                                LOG.info(" - Downloaded update to cache!");
-                                LOG.info(" - Sending result to AutoPlug.jar");
+                                LOG.info(" - Info: Downloaded update to cache successfully!");
+                                LOG.info(" ");
 
-                                String new_plugin_path =  directory_plugins + "\\"+output_name+"["+latest_version+"]-AUTOPLUGGED-LATEST.jar";
+                                String new_plugin_path =  directory_plugins + "/"+output_name+"["+latest_version+"]-AUTOPLUGGED-LATEST.jar";
 
                                 //SEND: Path of files in cache
                                 local_dos.writeUTF(cached_plugin_path);
@@ -262,16 +276,19 @@ public class UpdatePlugins {
                                 local_dos.writeUTF(output_name);
 
 
-                                UpdateCounter++;
                                 //SEND 17: send final reponse
                                 dos.writeUTF("true");
+
+                                UpdateCounter++;
 
                             }else{
 
                                 //SEND local autoplug.jar, that this plugin doesn't need further changes
                                 local_dos.writeUTF("false");
 
-                                LOG.severe(" - Failed to download jar to cache!");
+                                LOG.severe(" [!] Failed to download jar to cache [!]");
+                                LOG.info(" ");
+
                                 //SEND 17: send final reponse
                                 dos.writeUTF("false");
                             }
@@ -279,6 +296,7 @@ public class UpdatePlugins {
                         }
                     }
 
+                    LOG.info("|----------------------------------------|");
                     LOG.info("     ___       __       ___  __");
                     LOG.info("    / _ |__ __/ /____  / _ \\/ /_ _____ _");
                     LOG.info("   / __ / // / __/ _ \\/ ___/ / // / _ `/");
@@ -309,12 +327,12 @@ public class UpdatePlugins {
                         LOG.info("|All plugins are up-to-date!");
                     }
                     LOG.info("|----------------------------------------|");
-
+                    LOG.info(" ");
                 }
 
             }
             else {
-                LOG.severe(" - Authentication failed! Please check your config and be sure, that your server_key matches the key on our website! " + GLOBALDATA.OFFICIAL_WEBSITE);
+                LOG.severe(" [!] Authentication failed! Please check your config and be sure, that your server_key matches the key on our website [!] " + GLOBALDATA.OFFICIAL_WEBSITE);
                 client.close();
                 local_socket.close();
             }
@@ -329,20 +347,23 @@ public class UpdatePlugins {
             return true;
 
         } catch (SocketException ex) {
-            LOG.log(Level.WARNING, "Protocol error. Ignoring packet - "
-                    + ex.getLocalizedMessage());
+            LOG.severe(" [!] Authentication failed! Please check your config and be sure, that your server_key matches the key on our website [!] " + GLOBALDATA.OFFICIAL_WEBSITE);
             return false;
         } catch (Exception ex) {
-            LOG.severe(" - Exception caught. Closing connection [!]" + ex);
-            ex.printStackTrace();
+            LOG.severe(" [!] Authentication failed! Please check your config and be sure, that your server_key matches the key on our website [!] " + GLOBALDATA.OFFICIAL_WEBSITE);
             try {
                 //Close connections
-                client.close();
-                dis.close();
-                dos.close();
-                local_socket.close();
-                local_dis.close();
-                local_dos.close();
+                if (!client.isClosed()){
+                    client.close();
+                    dis.close();
+                    dos.close();
+                }
+
+                if (!local_socket.isClosed()){
+                    local_socket.close();
+                    local_dis.close();
+                    local_dos.close();
+                }
                 return false;
             } catch (IOException e) {
                 e.printStackTrace();

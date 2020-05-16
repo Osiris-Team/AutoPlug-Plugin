@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 [Osiris Team](https://github.com/Osiris-Team)
+ * Copyright (c) 2020 [Osiris Team](https://github.com/Osiris-Team)
  *  All rights reserved.
  *
  *  This software is copyrighted work licensed under the terms of the
@@ -7,11 +7,6 @@
  */
 
 package com.osiris.autoplug.plugin.tasks;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.net.Socket;
-import java.util.logging.Logger;
 
 public class TaskHandler {
 
@@ -33,7 +28,7 @@ public class TaskHandler {
     public Boolean execute() {
 
         if (async) {
-            //Executes the requests in tasks mode
+            //Executes the requests in async mode
             new Thread(() -> {
                 request(request);
             }).start();
