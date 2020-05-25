@@ -5,11 +5,7 @@ An easy to use interface to manage and update all of your Plugins! No more wasti
 All you want, all you need at one place.
 
 # Plugin | Features
- - Collects each plugin name, author and version and sends the data to our server (the server then checks for updates via spiget-api).
- - Receives download link if there is an update available and downloads the jar file to /autoplug-cache.
- - Profile automatic: Deletes old jar file from /plugins and replaces it with the new one. Then the server is restarted.
- - or
- - Profile manual: No jars will be updated and the server wont restart. You will only get notified that there are updates available.
+The AutoPlugPlugin.jar now is only responsible for gathering the plugin data, aswell as sorting out plugins with missing information and excluding plugins from the "excluded-plugins" list (config.yml)
 
 
 # Join us!
