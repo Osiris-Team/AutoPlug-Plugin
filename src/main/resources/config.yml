@@ -1,16 +1,9 @@
 #
 #
 # Thank you for downloading AutoPlug!
-# For installation instructions check our Spigot post: https://www.spigotmc.org/members/osiristeam.935748/
+# For installation instructions check our Spigot post: https://www.spigotmc.org/resources/autoplug-automatic-plugin-updater.78414/
 #
 #
-# Enter your server-key here. You get the key by registering on http://autoplug.ddns.net
-server-key: '1272399399'
-
-# If you have a lot of plugins (over 200) and your plugins-check takes ages to complete
-# you can enable this. The check is then made asynchronously without affecting the server-startup time.
-# The only downside, is that your console will look like a mess...
-async-check: false
-
-# Toggles debug info
-debug: false
+excluded-plugins:
+  - AutoPlugPlugin
+  - AnotherPlugin

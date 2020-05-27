@@ -1,7 +1,6 @@
 name: AutoPlugPlugin
 version: ${project.version}
-main: com.osiris.autoplug.plugin.Main
-api-version: 1.13
+main: com.osiris.autoplug.plugin.Startup
+api-version: 1.15
 authors: [OsirisTeam]
-description: Automatic Plugin Updater
-load: STARTUP
+description: ${project.description}

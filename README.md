@@ -7,6 +7,26 @@ All you want, all you need at one place.
 # Plugin | Features
 The AutoPlugPlugin.jar now is only responsible for gathering the plugin data, aswell as sorting out plugins with missing information and excluding plugins from the "excluded-plugins" list (config.yml)
 
+# Libraries
+```xml
+
+    <repositories>
+        <repository>
+            <id>spigotmc-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.15.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+	
+```
 
 # Join us!
 If you are interested in this project and you have questions or you want to contribute just contact us:
