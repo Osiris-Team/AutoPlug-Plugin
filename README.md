@@ -7,6 +7,12 @@ All you want, all you need at one place.
 # Plugin | Features
 The AutoPlugPlugin.jar now is only responsible for gathering the plugin data, aswell as sorting out plugins with missing information and excluding plugins from the "excluded-plugins" list (config.yml)
 
+Links:
+- [AutoPlug-Releases](https://github.com/Osiris-Team/AutoPlug-Releases)
+- [AutoPlug-Development](https://trello.com/b/zC8MKgEe/autoplug-development)
+- [AutoPlug-Client](https://github.com/Osiris-Team/AutoPlug-Client)
+- [AutoPlug-Plugin](https://github.com/Osiris-Team/AutoPlug-Plugin)
+
 # Libraries
 ```xml
 
