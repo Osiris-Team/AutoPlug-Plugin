@@ -6,13 +6,15 @@
 - [Spigot](https://www.spigotmc.org/members/osiristeam.935748/)
 - [Discord](https://discord.com/invite/GGNmtCC)
 
+# AutoPlug | Plugin
+1.Collects plugin data
+2.Excludes plugins with missing data
+3.Passes over information to AutoPlugClient
+
 # AutoPlug | The Idea
 AutoPlug is meant to be that what all Server-Owners are waiting for. 
 An easy to use interface to manage and update all of your Plugins! No more wasting time in searching links and changelogs!
 All you want, all you need at one place.
-
-# Plugin | Features
-The AutoPlugPlugin.jar now is only responsible for gathering the plugin data, aswell as sorting out plugins with missing information and excluding plugins from the "excluded-plugins" list (config.yml)
 
 # Libraries
 ```xml
