@@ -7,9 +7,9 @@
 - [Discord](https://discord.com/invite/GGNmtCC)
 
 # AutoPlug | Plugin
-1.Collects plugin data
-2.Excludes plugins with missing data
-3.Passes over information to AutoPlugClient
+ 1. Collects plugin data
+ 2. Excludes plugins with missing data
+ 3. Passes over information to AutoPlugClient
 
 # AutoPlug | The Idea
 AutoPlug is meant to be that what all Server-Owners are waiting for. 
