@@ -19,20 +19,36 @@ All you want, all you need at one place.
 # Libraries
 ```xml
 
-    <repositories>
+   <repositories>
+
         <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
     </repositories>
 
     <dependencies>
+
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.15.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- https://github.com/Carleslc/Simple-YAML -->
+        <dependency>
+            <groupId>com.github.Carleslc</groupId>
+            <artifactId>Simple-YAML</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+
     </dependencies>
 	
 ```

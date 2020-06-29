@@ -8,6 +8,8 @@
 
 package com.osiris.autoplug.plugin;
 
+import org.simpleyaml.configuration.file.YamlFile;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,6 +17,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -24,33 +27,92 @@ public class Communication {
 
     private static final Logger LOG = Logger.getLogger("AutoPlugPlugin");
 
-    private Socket local_socket;
-    private DataInputStream local_dis;
-    private DataOutputStream local_dos;
+    private static Socket local_socket;
+    private static DataInputStream local_dis;
+    private static DataOutputStream local_dos;
 
     public Communication(){
-        connect();
+        getServerKey();
+        findAutoPlugClient();
     }
 
-    public void connect(){
+    public static String server_key;
 
+    private YamlFile config = new YamlFile("autoplug-server-config.yml");
+
+    /**
+     * Get the server key from /autoplug-server-config.yml.
+     * Remember the working directory of every plugin is at / .
+     */
+    private void getServerKey(){
+
+        YamlFile config = new YamlFile("autoplug-server-config.yml");
+
+        // Load the YAML file
         try {
-            LOG.info("Connecting to local AutoPlug.jar...");
-            local_socket = new Socket("localhost", 35556);
-            local_dis = new DataInputStream(local_socket.getInputStream());
-            local_dos = new DataOutputStream(local_socket.getOutputStream());
-            LOG.info("Connection successful! ");
+            if (!config.exists()) {
+                LOG.severe(" - autoplug-server-config.yml not found!");
+            }
+            else {
+                LOG.info(" - Loading autoplug-server-config.yml...");
+            }
+            config.load(); // Loads the entire file
 
         } catch (Exception e) {
             e.printStackTrace();
-            LOG.severe(" [!] ERROR: " + e.getMessage());
-            LOG.severe(" [!] Couldn't establish connection to local AutoPlug.jar [!]");
-            LOG.severe(" [!] Please make sure you downloaded the AutoPlug.jar and placed it into the main directory (where your server.jar is located) [!]");
-            LOG.severe(" [!] You must change your startup script, so that it starts the AutoPlug.jar. It will handle the server starts/restarts [!]");
         }
 
+        server_key = config.getString("autoplug-server-config.server.key");
 
     }
+
+    /**
+     * If there are multiple servers running(Bungeecord), we need to differentiate between them
+     * so each plugin list is delivered to the right AutoPlug-Client.
+     * To do this, we iterate through all ports starting at 35565, and send them the server key.
+     * If there is no server key in response or that key doesn't match, we move on.
+     * Max port is 65535.
+     */
+    private void findAutoPlugClient(){
+
+        LOG.info("Searching AutoPlug-Client on local network...");
+        int i = 35565;
+        boolean match = false;
+        while(!match){
+
+            try {
+                LOG.info("Connecting to port "+i+"...");
+                local_socket = new Socket("localhost", i);
+                local_dis = new DataInputStream(local_socket.getInputStream());
+                local_dos = new DataOutputStream(local_socket.getOutputStream());
+                LOG.info("Connection successful!");
+                LOG.info("Comparing server-keys");
+
+                //Send server key to AutoPlug-Client on that port and let it be compared
+                local_dos.writeUTF(server_key);
+
+                //Get comparison result
+                if (local_dis.readUTF().equals("true")){
+                    LOG.info("Server-keys match!");
+                    match = true;
+                }
+                else{
+                    LOG.info("Server-keys not matching!");
+                    match = false;
+                    i++;
+                }
+
+            } catch (Exception e) {
+                LOG.severe(" [!] ERROR: " + e.getMessage());
+                match = false;
+                i++;
+            }
+
+        }
+
+    }
+
+
 
     public int sendPlugins(){
 
