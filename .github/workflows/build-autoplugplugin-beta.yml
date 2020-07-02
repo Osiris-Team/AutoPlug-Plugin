@@ -31,16 +31,16 @@ jobs:
       #This will delete the workflow-cache folder if exists, create a new one and copy AutoPlug.jar into it
     - name: Copy jar to workflow-cache dir
       run: |
-       rm -rf workflow-cache
-       mkdir -p workflow-cache
-       cp target/AutoPlugPlugin.jar workflow-cache
+       rm -rf latest-build
+       mkdir -p latest-build
+       cp target/AutoPlugPlugin.jar latest-build
       
     - name: Add and confirm update
       run: |
         git config --local user.email "osiris_support@pm.me"
         git config --local user.name "GitHub Action"
-        git add workflow-cache/AutoPlugPlugin.jar
-        git commit -m "Updated to latest beta-build" -a
+        git add latest-build/AutoPlugPlugin.jar
+        git commit -m "Updated to latest build" -a
       
     - name: Push/Upload update
       uses: ad-m/github-push-action@master
