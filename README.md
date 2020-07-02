@@ -7,6 +7,7 @@
 - [Discord](https://discord.com/invite/GGNmtCC)
 
 # AutoPlug | Plugin
+![Build test](https://github.com/Osiris-Team/AutoPlug-Plugin/workflows/Build%20test/badge.svg)
  1. Collects plugin data
  2. Excludes plugins with missing data
  3. Passes over information to AutoPlugClient
