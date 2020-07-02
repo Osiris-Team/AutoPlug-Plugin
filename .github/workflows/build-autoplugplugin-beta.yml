@@ -49,32 +49,3 @@ jobs:
         branch: 'master'
         force: true
         repository: 'Osiris-Team/AutoPlug-Plugin'
-      
-      #We also want to have the jar at our Releases repo
-    - name: Checkout AutoPlug-Releases
-      uses: actions/checkout@master
-      with:
-        repository: 'Osiris-Team/AutoPlug-Releases'
-        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
-        
-      #Downloads the jar we uploaded 1sec ago to the AutoPlug-Client repo
-    - name: Download jar
-      run: |
-        rm -rf beta-builds/AutoPlugPlugin.jar
-        wget -O beta-builds/AutoPlugPlugin.jar "https://github.com/Osiris-Team/AutoPlug-Plugin/raw/master/workflow-cache/AutoPlugPlugin.jar"
-      
-    - name: Add and confirm update
-      run: |
-        git config --local user.email "osiris_support@pm.me"
-        git config --local user.name "GitHub Action"
-        git add beta-builds/AutoPlugPlugin.jar
-        git commit -m "Updated to latest beta-build" -a
-      
-    - name: Push/Upload update
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.WORKFLOW_TOKEN }}
-        branch: 'master'
-        force: true
-        repository: 'Osiris-Team/AutoPlug-Releases'
