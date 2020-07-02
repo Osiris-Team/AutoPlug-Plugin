@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: AutoPlugPlugin-BETA build
+name: AutoPlugPlugin-latest
 
 on:
   push:
@@ -61,8 +61,7 @@ jobs:
       #Downloads the jar we uploaded 1sec ago to the AutoPlug-Client repo
     - name: Download jar
       run: |
-        rm -rf beta-builds
-        mkdir beta-builds
+        rm -rf beta-builds/AutoPlugPlugin.jar
         wget -O beta-builds/AutoPlugPlugin.jar "https://github.com/Osiris-Team/AutoPlug-Plugin/raw/master/workflow-cache/AutoPlugPlugin.jar"
       
     - name: Add and confirm update
