@@ -30,15 +30,24 @@ public final class Startup extends JavaPlugin {
         LOG.info(" ");
         new Config(this);
         LOG.info(" ");
-        Communication communication = new Communication();
-        if (communication.sendPlugins()==1){
-            //Stop the server to update the plugins
-            //onDisable method will notify the client that the server is closed
-            Bukkit.getServer().shutdown();
-        } else{
-            //Do nothing and let the server run
-        }
-        LOG.info(" ");
+
+        Thread newThread = new Thread(()->{
+
+            Communication communication = new Communication();
+            if (communication.sendPlugins()==1){
+                //Stop the server to update the plugins
+                //onDisable method will notify the client that the server is closed
+                LOG.info(" - Received 'shutdown' command");
+                Bukkit.getServer().shutdown();
+            } else{
+                LOG.info(" - Received 'no_shutdown' command");
+                //Do nothing and let the server run
+            }
+
+        });
+        newThread.start();
+
+
 
 
     }

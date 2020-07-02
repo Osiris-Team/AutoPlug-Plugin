@@ -4,3 +4,4 @@ main: com.osiris.autoplug.plugin.Startup
 api-version: 1.15
 authors: [OsirisTeam]
 description: ${project.description}
+load: STARTUP
