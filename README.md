@@ -1,57 +1,25 @@
 ![](https://rapidus-info.webnode.com/_files/200000003-4d08d4d08f/AutoPlug%20GitHub%20Header%20800x80.png)
 - [AutoPlug-Releases](https://github.com/Osiris-Team/AutoPlug-Releases)
-- [AutoPlug-Live-Development](https://trello.com/b/zC8MKgEe/autoplug-development)
 - [AutoPlug-Client](https://github.com/Osiris-Team/AutoPlug-Client)
+- [AutoPlug-Client-Development](https://github.com/Osiris-Team/AutoPlug-Client/projects/1?fullscreen=true)
 - [AutoPlug-Plugin](https://github.com/Osiris-Team/AutoPlug-Plugin)
+- [AutoPlug-Plugin-Development](https://github.com/Osiris-Team/AutoPlug-Plugin/projects/1?fullscreen=true)
 - [Spigot](https://www.spigotmc.org/members/osiristeam.935748/)
 - [Discord](https://discord.com/invite/GGNmtCC)
 
-# AutoPlug | Plugin
+## AutoPlug-Plugin | General
+AutoPlug-Plugin(AutoPlugPlugin.jar) is responsible for garthering all plugin details at startup and pass it over to the client.
+
+## AutoPlug-Plugin | Contribute
+If you are new to contributing read [this](https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/) article. If you are planing to do big changes, please create an issue before, in which you explain your aims. We'll respond you as soon as possible.
+
+## AutoPlug-Plugin | Workflow
 ![Build test](https://github.com/Osiris-Team/AutoPlug-Plugin/workflows/Build%20test/badge.svg)
  1. Collects plugin data
  2. Excludes plugins with missing data
  3. Passes over information to AutoPlugClient
 
-# AutoPlug | The Idea
-AutoPlug is meant to be that what all Server-Owners are waiting for. 
-An easy to use interface to manage and update all of your Plugins! No more wasting time in searching links and changelogs!
-All you want, all you need at one place.
-
-# Libraries
-```xml
-
-   <repositories>
-
-        <repository>
-            <id>spigotmc-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-
-    </repositories>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.15.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- https://github.com/Carleslc/Simple-YAML -->
-        <dependency>
-            <groupId>com.github.Carleslc</groupId>
-            <artifactId>Simple-YAML</artifactId>
-            <version>1.4.1</version>
-        </dependency>
-
-    </dependencies>
-	
-```
+## AutoPlug-Plugin | Libraries
+- [Simple-Yaml](https://github.com/Carleslc/Simple-YAML)
 
  > Copyright (c) 2020 Osiris Team. All rights reserved. Read the "LICENSE" file for details.
