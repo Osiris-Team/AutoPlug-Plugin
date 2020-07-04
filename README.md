@@ -11,7 +11,7 @@
 AutoPlug-Plugin(AutoPlugPlugin.jar) is responsible for garthering all plugin details at startup and pass it over to the client.
 
 ## AutoPlug-Plugin | Contribute
-If you are new to contributing read [this](https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/) article. If you are planing to do big changes, please create an issue before, in which you explain your aims. We'll respond you as soon as possible.
+If you are new to contributing read [this](https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/) article. If you are planing to do big changes, create an issue first, where you explain what you want to do.
 
 ## AutoPlug-Plugin | Workflow
 ![Build test](https://github.com/Osiris-Team/AutoPlug-Plugin/workflows/Build%20test/badge.svg)
