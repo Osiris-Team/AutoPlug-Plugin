@@ -14,7 +14,7 @@
 
     <groupId>com.osiris.autoplug.plugin</groupId>
     <artifactId>autoplug-plugin</artifactId>
-    <version>0.9</version>
+    <version>0.8</version>
     <packaging>jar</packaging>
 
     <name>AutoPlugPlugin</name>
