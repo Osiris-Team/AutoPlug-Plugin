@@ -25,4 +25,4 @@ Othervise just remember to have logical commit messages and do your pull request
 ## AutoPlug-Plugin | Libraries
 - [Simple-Yaml](https://github.com/Carleslc/Simple-YAML)
 
- > Copyright (c) 2020 Osiris Team. All rights reserved. Read the "LICENSE" file for details.
+<p align="center"><i>Copyright ©️ 2020 Osiris Team. All rights reserved. Read the "LICENSE" file for details.<i></p>
