@@ -1,0 +1,4 @@
+com\osiris\autoplug\plugin\Config.class
+com\osiris\autoplug\plugin\Communication.class
+com\osiris\autoplug\plugin\Startup.class
+com\osiris\autoplug\plugin\Plugins.class

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2020 [Osiris Team](https://github.com/Osiris-Team)
-  ~  All rights reserved.
+  ~ Copyright Osiris Team
+  ~ All rights reserved.
   ~
-  ~  This software is copyrighted work licensed under the terms of the
-  ~  AutoPlug License.  Please consult the file "LICENSE" for details.
+  ~ This software is copyrighted work licensed under the terms of the
+  ~ AutoPlug License.  Please consult the file "LICENSE" for details.
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -14,7 +14,7 @@
 
     <groupId>com.osiris.autoplug.plugin</groupId>
     <artifactId>autoplug-plugin</artifactId>
-    <version>0.8</version>
+    <version>0.9</version>
     <packaging>jar</packaging>
 
     <name>AutoPlugPlugin</name>

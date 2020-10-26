@@ -1,0 +1,7 @@
+name: AutoPlugPlugin
+version: 0.9
+main: com.osiris.autoplug.plugin.Startup
+api-version: 1.15
+authors: [OsirisTeam]
+description: Collects plugins names, authors and versions
+load: STARTUP
