@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2020 [Osiris Team](https://github.com/Osiris-Team)
-  ~  All rights reserved.
+  ~ Copyright Osiris Team
+  ~ All rights reserved.
   ~
-  ~  This software is copyrighted work licensed under the terms of the
-  ~  AutoPlug License.  Please consult the file "LICENSE" for details.
+  ~ This software is copyrighted work licensed under the terms of the
+  ~ AutoPlug License.  Please consult the file "LICENSE" for details.
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -12,22 +12,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.osiris.autoplug.plugin</groupId>
+    <groupId>online.autoplug.plugin</groupId>
     <artifactId>autoplug-plugin</artifactId>
-    <version>0.8</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>AutoPlugPlugin</name>
-    <description>Collects plugins names, authors and versions</description>
+    <name>AutoPlug-Plugin</name>
+    <description>Enables execution of AutoPlug-Client commands from in-game.</description>
 
     <properties>
-        <jar.name>AutoPlugPlugin</jar.name>
-        <java.version>1.8</java.version>
+        <main.class>com.osiris.autoplug.plugin.Startup</main.class>
+        <java.version>16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
-        <finalName>${jar.name}</finalName>
+        <finalName>${name}</finalName>
         <defaultGoal>clean package</defaultGoal>
         <plugins>
             <plugin>
@@ -42,9 +42,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>3.2.4</version>
                 <executions>
                     <execution>
+                        <id>shade</id>
                         <phase>package</phase>
                         <goals>
                             <goal>shade</goal>
@@ -81,17 +82,29 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.15.2-R0.1-SNAPSHOT</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
         <!-- https://github.com/Carleslc/Simple-YAML -->
         <dependency>
-            <groupId>com.github.Carleslc</groupId>
-            <artifactId>Simple-YAML</artifactId>
-            <version>1.4.1</version>
+            <groupId>com.github.Osiris-Team</groupId>
+            <artifactId>Dream-Yaml</artifactId>
+            <version>6.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>fr.minuskube.inv</groupId>
+            <artifactId>smart-invs</artifactId>
+            <version>1.2.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>13.0</version>
         </dependency>
 
     </dependencies>
