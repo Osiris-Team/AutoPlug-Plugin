@@ -1,7 +1,43 @@
-name: AutoPlugPlugin
+name: ${name}
 version: ${project.version}
-main: com.osiris.autoplug.plugin.Startup
+main: ${main.class}
 api-version: 1.15
 authors: [OsirisTeam]
 description: ${project.description}
 load: STARTUP
+commands:
+
+  .:
+    description: Opens the AutoPlug-Plugin-GUI.
+    usage: /.
+    permission: autoplug.plugin.gui
+
+  .restart:
+    description: Restarts the server.
+    usage: /.restart
+    permission: autoplug.plugin.restart
+
+  .r:
+    description: Restarts the server. (Shortcut)
+    usage: /.r
+    permission: autoplug.plugin.restart
+
+  .stop:
+    description: Stops the server.
+    usage: /.stop
+    permission: autoplug.plugin.stop
+
+  .st:
+    description: Stops the server. (Shortcut)
+    usage: /.st
+    permission: autoplug.plugin.stop
+
+  .stop both:
+    description: Stops the server and the AutoPlug-Client.
+    usage: /.stb
+    permission: autoplug.plugin.stopboth
+
+  .stb:
+    description: Stops the server and the AutoPlug-Client. (Shortcut)
+    usage: /.stb
+    permission: autoplug.plugin.stopboth

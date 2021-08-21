@@ -1,61 +1,92 @@
 /*
- * Copyright (c) 2020 [Osiris Team](https://github.com/Osiris-Team)
- *  All rights reserved.
+ * Copyright Osiris Team
+ * All rights reserved.
  *
- *  This software is copyrighted work licensed under the terms of the
- *  AutoPlug License.  Please consult the file "LICENSE" for details.
+ * This software is copyrighted work licensed under the terms of the
+ * AutoPlug License.  Please consult the file "LICENSE" for details.
  */
 
 package com.osiris.autoplug.plugin;
 
-import org.bukkit.Bukkit;
+import fr.minuskube.inv.InventoryManager;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
-import java.util.logging.Logger;
+import java.io.File;
+
+import static com.osiris.autoplug.plugin.Constants.*;
 
 public final class Startup extends JavaPlugin {
 
-    private static final Logger LOG = Logger.getLogger("AutoPlugPlugin");
+    @Override
+    public void onLoad() {
+        super.onLoad();
+    }
 
     @Override
     public void onEnable() {
+        super.onEnable();
+        INV_MAN = new InventoryManager(this);
+        INV_MAN.init();
 
-        LOG.info(" ");
-        LOG.info(" - Initialising AutoPlugPlugin");
-        LOG.info(" - Official registration page: https://autoplug.ddns.net");
-        LOG.info(" ");
-        new Config(this);
-        LOG.info(" ");
+        // Check if AutoPlug-Client is installed
+        try {
+            File autoPlugClientJar = new FileManager().autoplugJar(new File(System.getProperty("user.dir"))); // May throw an exception
+            if (autoPlugClientJar == null)
+                throw new RuntimeException("To use this plugin, AutoPlug-Client must be installed." +
+                        " No AutoPlug-Client installation found in '" + System.getProperty("user.dir") + "'." +
+                        " To install the AutoPlug-Client, follow the installation instructions at: https://autoplug.online/installation");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        Thread newThread = new Thread(()->{
+        LOG.info("AutoPlug-Client installation was found, connecting...");
+        CON = new AutoPlugClientConnection();
 
-            Communication communication = new Communication();
-            if (communication.sendPlugins()==1){
-                //Stop the server to update the plugins
-                //onDisable method will notify the client that the server is closed
-                LOG.info(" - Received 'shutdown' command");
-                Bukkit.getServer().shutdown();
-            } else{
-                LOG.info(" - Received 'no_shutdown' command");
-                //Do nothing and let the server run
-            }
-
+        // Register commands:
+        this.getCommand(".").setExecutor((sender, command, label, args) -> {
+            Commands.openGUI((Player) sender);
+            return true;
         });
-        newThread.start();
 
+        this.getCommand(".restart").setExecutor((sender, command, label, args) -> {
+            Commands.restart();
+            return true;
+        });
+        this.getCommand(".r").setExecutor((sender, command, label, args) -> {
+            Commands.restart();
+            return true;
+        });
 
+        this.getCommand(".stop").setExecutor((sender, command, label, args) -> {
+            Commands.stop();
+            return true;
+        });
+        this.getCommand(".st").setExecutor((sender, command, label, args) -> {
+            Commands.stop();
+            return true;
+        });
 
-
+        this.getCommand(".stop both").setExecutor((sender, command, label, args) -> {
+            Commands.stopBoth();
+            return true;
+        });
+        this.getCommand(".stb").setExecutor((sender, command, label, args) -> {
+            Commands.stopBoth();
+            return true;
+        });
+        LOG.info("AutoPlug-Plugin enabled successfully.");
     }
 
     @Override
     public void onDisable() {
-
+        super.onDisable();
+        try {
+            if (CON != null) CON.getSocket().close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        LOG.info("Disabled AutoPlug-Plugin successfully.");
     }
-
 
 }
