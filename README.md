@@ -57,9 +57,18 @@ commands:
 ```
 
 ## AutoPlug-Plugin | Contribute
-If you never contributed before, read [this](https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/) article. 
-If you are planing to do big changes, create an issue first, where you explain what you want to do.
-Othervise just remember to have logical commit messages and do your pull requests on the 'beta' branch.
+
+If you have never contributed before, we recommend this [Beginners Article](https://www.jetbrains.com/help/idea/contribute-to-projects.html).
+If you are planning to make big changes, create an issue first, where you explain what you want to do. Thank you in advance for every
+contribution!
+
+- Written in [Java](https://java.com/), with [JDK 8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html), inside of [IntelliJ IDEA](https://www.jetbrains.com/idea/)
+- Built with [Maven](https://maven.apache.org/), profiles: clean package
+- `AutoPlug-Plugin.jar` gets exported to the `/target` folder
+
+If you don't know how to import a GitHub project, check out this guide:
+
+- For IntelliJ IDEA checkout the [Cloning Guide](https://blog.jetbrains.com/idea/2020/10/clone-a-project-from-github/)
 
 ## AutoPlug-Plugin | Libraries
 - [Dream-Yaml](https://github.com/Osiris-Team/Dream-Yaml) is used for handling YAML files.
