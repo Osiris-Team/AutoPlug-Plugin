@@ -1,15 +1,12 @@
 ![](https://rapidus-info.webnode.com/_files/200000003-4d08d4d08f/AutoPlug%20GitHub%20Header%20800x80.png)
 ## Links
-- [AutoPlug-Releases](https://github.com/Osiris-Team/AutoPlug-Releases)
 - [AutoPlug-Client](https://github.com/Osiris-Team/AutoPlug-Client)
-- [AutoPlug-Client-Development](https://bit.ly/acprogress)
 - [AutoPlug-Plugin-Development](https://bit.ly/approgress)
-- [Spigot](https://www.spigotmc.org/members/osiristeam.935748/) TODO CHANGE THIS
 - [Discord](https://discord.com/invite/GGNmtCC)
 
 ## AutoPlug-Plugin | Installation
 (pre-requisite) [AutoPlug-Client](https://www.spigotmc.org/resources/autoplug-automatic-plugin-server-java-self-updater.78414/) installed.
- 1. Download latest version of AutoPlug-Plugin from [here]() TODO INSERT LINK HERE.
+ 1. Download latest version of AutoPlug-Plugin from [here](https://www.spigotmc.org/resources/autoplug-plugin.95568/).
  2. Stop your server and move the downloaded jar into the /plugins directory.
  3. Start your server.
 
@@ -47,7 +44,7 @@ commands:
 
   .stop both:
     description: Stops the server and the AutoPlug-Client.
-    usage: /.stb
+    usage: /.stop both
     permission: autoplug.plugin.stopboth
 
   .stb:
