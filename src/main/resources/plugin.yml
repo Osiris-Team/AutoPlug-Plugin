@@ -34,7 +34,7 @@ commands:
 
   .stop both:
     description: Stops the server and the AutoPlug-Client.
-    usage: /.stb
+    usage: /.stop both
     permission: autoplug.plugin.stopboth
 
   .stb:

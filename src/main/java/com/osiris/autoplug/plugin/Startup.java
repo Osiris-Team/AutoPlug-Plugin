@@ -50,29 +50,29 @@ public final class Startup extends JavaPlugin {
         });
 
         this.getCommand(".restart").setExecutor((sender, command, label, args) -> {
-            Commands.restart();
+            Commands.restart(sender);
             return true;
         });
         this.getCommand(".r").setExecutor((sender, command, label, args) -> {
-            Commands.restart();
+            Commands.restart(sender);
             return true;
         });
 
         this.getCommand(".stop").setExecutor((sender, command, label, args) -> {
-            Commands.stop();
+            Commands.stop(sender);
             return true;
         });
         this.getCommand(".st").setExecutor((sender, command, label, args) -> {
-            Commands.stop();
+            Commands.stop(sender);
             return true;
         });
 
         this.getCommand(".stop both").setExecutor((sender, command, label, args) -> {
-            Commands.stopBoth();
+            Commands.stopBoth(sender);
             return true;
         });
         this.getCommand(".stb").setExecutor((sender, command, label, args) -> {
-            Commands.stopBoth();
+            Commands.stopBoth(sender);
             return true;
         });
         LOG.info("AutoPlug-Plugin enabled successfully.");

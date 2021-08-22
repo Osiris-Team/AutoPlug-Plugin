@@ -12,10 +12,12 @@ import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 
@@ -35,34 +37,40 @@ public class AutoPlugCommandsGUI implements InventoryProvider {
     public void init(Player player, InventoryContents contents) {
         contents.fillBorders(ClickableItem.empty(new ItemStack(Material.BLACK_STAINED_GLASS_PANE)));
 
-        ItemStack restart = new ItemStack(Material.DIRT);
-        restart.getItemMeta().setDisplayName(".restart");
-        restart.getItemMeta().setLore(Arrays.asList("Restarts the server."));
+        ItemStack restart = new ItemStack(Material.YELLOW_WOOL);
+        ItemMeta itemRestart = Bukkit.getItemFactory().getItemMeta(Material.YELLOW_WOOL);
+        itemRestart.setDisplayName(".restart");
+        itemRestart.setLore(Arrays.asList("Restarts the server."));
+        restart.setItemMeta(itemRestart);
 
-        ItemStack stop = new ItemStack(Material.DIRT);
-        stop.getItemMeta().setDisplayName(".stop");
-        stop.getItemMeta().setLore(Arrays.asList("Stops the server."));
+        ItemStack stop = new ItemStack(Material.RED_WOOL);
+        ItemMeta itemStop = Bukkit.getItemFactory().getItemMeta(Material.RED_WOOL);
+        itemStop.setDisplayName(".stop");
+        itemStop.setLore(Arrays.asList("Stops the server."));
+        stop.setItemMeta(itemStop);
 
-        ItemStack stopBoth = new ItemStack(Material.DIRT);
-        stopBoth.getItemMeta().setDisplayName(".stop both");
-        stopBoth.getItemMeta().setLore(Arrays.asList("Stops the server and the AutoPlug-Client."));
+        ItemStack stopBoth = new ItemStack(Material.BLACK_WOOL);
+        ItemMeta itemStopBoth = Bukkit.getItemFactory().getItemMeta(Material.BLACK_WOOL);
+        itemStopBoth.setDisplayName(".stop both");
+        itemStopBoth.setLore(Arrays.asList("Stops the server and the AutoPlug-Client."));
+        stopBoth.setItemMeta(itemStopBoth);
 
         contents.set(1, 1, ClickableItem.of(restart,
                 e -> {
-                    Commands.restart();
                     player.closeInventory();
+                    Commands.restart(player);
                 }));
 
         contents.set(1, 2, ClickableItem.of(stop,
                 e -> {
-                    Commands.stop();
                     player.closeInventory();
+                    Commands.stop(player);
                 }));
 
         contents.set(1, 3, ClickableItem.of(stopBoth,
                 e -> {
-                    Commands.stopBoth();
                     player.closeInventory();
+                    Commands.stopBoth(player);
                 }));
     }
 
