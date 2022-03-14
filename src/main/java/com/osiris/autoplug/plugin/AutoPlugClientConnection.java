@@ -11,10 +11,7 @@ package com.osiris.autoplug.plugin;
 import com.osiris.dyml.DreamYaml;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.Socket;
 
 import static com.osiris.autoplug.plugin.Constants.CON;
@@ -25,31 +22,12 @@ import static com.osiris.autoplug.plugin.Constants.LOG;
  */
 public class AutoPlugClientConnection {
     private static BufferedWriter bw;
-    private String serverKey;
+    private int port;
+    private String key;
     private Socket socket;
 
-    public AutoPlugClientConnection() {
-        getServerKey();
-        findAutoPlugClient();
-    }
-
-    public static synchronized void send(@NotNull String message) {
-        try {
-            message = CON.serverKey + " " + message;
-            if (bw != null) {
-                if (!message.contains(System.lineSeparator())) {
-                    bw.write(message + System.lineSeparator());
-                } else {
-                    bw.write(message);
-                }
-                bw.flush();
-            }
-        } catch (Exception e) { // Do not use AL.warn because that would cause an infinite loop
-        }
-    }
-
-    private void getServerKey() {
-        DreamYaml config = new DreamYaml(System.getProperty("user.dir") + "/autoplug/general-config.yml");
+    public AutoPlugClientConnection() throws Exception {
+        DreamYaml config = new DreamYaml(System.getProperty("user.dir") + "/autoplug/system/config.yml");
         if (!config.getFile().exists())
             throw new RuntimeException("File '" + config.getFile() + "' is missing! Please make sure that the AutoPlug-Client was installed and setup correctly.");
 
@@ -59,48 +37,37 @@ public class AutoPlugClientConnection {
             throw new RuntimeException(e);
         }
 
-        serverKey = config.get("general-config", "server", "key").asString();
+        key = config.get("config", "autoplug-plugin-key").asString();
+        port = config.get("config", "autoplug-plugin-port").asInt();
+
+        LOG.info("Connecting AutoPlug-Client on localhost:"+port+" ...");
+        socket = new Socket("localhost", port);
+        DataInputStream dis = new DataInputStream(socket.getInputStream());
+        DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+        LOG.info("Connected to AutoPlug-Client! Comparing plugin keys...");
+
+        // Send server key to AutoPlug-Client on that port and let it be compared
+        if (dis.readUTF().equals(key)) {
+            dos.writeUTF(key);
+            socket.setSoTimeout(0);
+            bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            LOG.info("Private plugin keys match. Connection established.");
+        } else
+            throw new Exception("Private local keys don't match!");
     }
 
-    /**
-     * If there are multiple servers running(Bungeecord) in the same local network, we need to differentiate between them
-     * so each AutoPlug-Plugin connects to the right AutoPlug-Client.
-     * To do this, we iterate through all ports starting at 35565, and wait for a server-key that we can compare with ours.
-     * If there is no server key in response or that key doesn't match, we move on.
-     * Max port is 65535.
-     */
-    private void findAutoPlugClient() {
-
-        LOG.info("Searching AutoPlug-Client on local network...");
-        int i = 35565;
-        boolean match = false;
-        for (int j = 1; j <= 1000; j++) {
-            try {
-                socket = new Socket("localhost", i);
-                DataInputStream dis = new DataInputStream(socket.getInputStream());
-                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-                LOG.info("Connected to AutoPlug-Client at port " + i + " and comparing keys...");
-
-                // Send server key to AutoPlug-Client on that port and let it be compared
-                if (dis.readUTF().equals(serverKey)) {
-                    LOG.info("Found AutoPlug-Client.");
-                    dos.writeUTF(serverKey);
-                    socket.setSoTimeout(0);
-                    bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                    match = true;
-                    break;
+    public static synchronized void send(@NotNull String message) {
+        try {
+            if (bw != null) {
+                if (!message.endsWith(System.lineSeparator())) {
+                    bw.write(message + System.lineSeparator());
                 } else {
-                    i++;
-                    socket.close();
+                    bw.write(message);
                 }
-            } catch (Exception ignored) {
+                bw.flush();
             }
+        } catch (Exception e) { // Do not use AL.warn because that would cause an infinite loop
         }
-
-        if (!match)
-            throw new RuntimeException("Checked ports 35565-" + i + " for the matching AutoPlug-Client, but failed to find it." +
-                    " This either means that AutoPlug-Client is not running, or you did something wrong during the installation," +
-                    " or your installation of AutoPlug-Client or AutoPlug-Plugin is outdated, or you have more that 1000 servers running on this network (not very likely).");
     }
 
     public Socket getSocket() {

@@ -14,7 +14,7 @@
 
     <groupId>online.autoplug.plugin</groupId>
     <artifactId>autoplug-plugin</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <name>AutoPlug-Plugin</name>

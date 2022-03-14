@@ -33,15 +33,20 @@ public final class Startup extends JavaPlugin {
         try {
             File autoPlugClientJar = new FileManager().autoplugJar(new File(System.getProperty("user.dir"))); // May throw an exception
             if (autoPlugClientJar == null)
-                throw new RuntimeException("To use this plugin, AutoPlug-Client must be installed." +
+                throw new Exception("To use this plugin, AutoPlug-Client must be installed." +
                         " No AutoPlug-Client installation found in '" + System.getProperty("user.dir") + "'." +
                         " To install the AutoPlug-Client, follow the installation instructions at: https://autoplug.online/installation");
         } catch (Exception e) {
             e.printStackTrace();
+            return;
         }
 
-        LOG.info("AutoPlug-Client installation was found, connecting...");
-        CON = new AutoPlugClientConnection();
+        try{
+            CON = new AutoPlugClientConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
 
         // Register commands:
         this.getCommand(".").setExecutor((sender, command, label, args) -> {
