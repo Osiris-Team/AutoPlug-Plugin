@@ -38,22 +38,31 @@ public class AutoPlugClientConnection {
         }
 
         key = config.get("config", "autoplug-plugin-key").asString();
-        port = config.get("config", "autoplug-plugin-port").asInt();
+        if(key==null) throw new Exception("You must have AutoPlug-Client installed and ran it at least once!");
+        port = 35565;
 
-        LOG.info("Connecting AutoPlug-Client on localhost:"+port+" ...");
-        socket = new Socket("localhost", port);
-        DataInputStream dis = new DataInputStream(socket.getInputStream());
-        DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-        LOG.info("Connected to AutoPlug-Client! Comparing plugin keys...");
-
-        // Send server key to AutoPlug-Client on that port and let it be compared
-        if (dis.readUTF().equals(key)) {
-            dos.writeUTF(key);
-            socket.setSoTimeout(0);
-            bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            LOG.info("Private plugin keys match. Connection established.");
-        } else
-            throw new Exception("Private local keys don't match!");
+        LOG.info("Connecting AutoPlug-Client on localhost:35565-35665...");
+        for (int i = 0; i < 100; i++) {
+            try{
+                if(socket != null) break;
+                socket = new Socket("localhost", port);
+                DataInputStream dis = new DataInputStream(socket.getInputStream());
+                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                // Send server key to AutoPlug-Client on that port and let it be compared
+                if (dis.readUTF().equals(key)) {
+                    dos.writeUTF(key);
+                    socket.setSoTimeout(0);
+                    bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                    LOG.info("Private plugin keys match. Connection established on localhost:"+port+".");
+                } else
+                    throw new Exception("Private local keys don't match!");
+            } catch (Exception e) {
+                socket = null;
+            }
+            port++;
+        }
+        if(socket.isClosed())
+            throw new Exception("Failed to connect to AutoPlug-Client on localhost:35565-35665...");
     }
 
     public static synchronized void send(@NotNull String message) {
